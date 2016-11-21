@@ -1,0 +1,58 @@
+<md-dialog aria-label="List dialog" class="md-padding" flex="90" flex-gt-sm="30">
+    <div>
+        <h3 ng-hide="todo.edit">{{todo.title}}</h3>
+        <p ng-hide="todo.edit">{{todo.description}}</p>
+        <p ng-hide="todo.edit" ng-if="todo.deadline"><small><b>Deadline</b>: {{todo.deadline | date : "shortDate" }}</small></p>
+
+        <form name="editTaskForm" ng-show="todo.edit">
+            <md-input-container>
+                <label for="todo-title">Title</label>
+                <input type="text" name="title" ng-model="todo.title" ng-minlength="3" required>
+                <div ng-messages="editTaskForm.title.$error" style="color:maroon" role="alert" ng-messages-multiple>
+                    <div ng-message="required">A title is required</div>
+                    <div ng-message="minlength">The title is too short</div>
+                </div>
+            </md-input-container>
+            <md-input-container>
+                <label for="description">Description</label>
+                <textarea type="text" name="description" ng-model="todo.description" ng-minlength="6" required></textarea>
+                <div ng-messages="editTaskForm.description.$error" style="color:maroon" role="alert" ng-messages-multiple>
+                    <div ng-message="required">A description is required</div>
+                    <div ng-message="minlength">The description is too short</div>
+                </div>
+            </md-input-container>
+
+            <md-input-container ng-if="todo.deadline">
+                <label for="deadline">Deadline</label>
+                <md-datepicker ng-model="todo.deadline" name="deadline" md-placeholder="{{todo.deadline}}" md-min-date="minDate" md-max-date="maxDate"
+                    md-open-on-focus></md-datepicker>
+            </md-input-container>
+        </form>
+    </div>
+    <md-dialog-actions class="dialog-buttons">
+        <md-button ng-if="!todo.edit" ng-click="closeDialog()" class="md-primary md-raised" hide-xs>
+            Close
+        </md-button>
+        <md-button ng-if="todo.edit" ng-click="editTask(todo._id, todo)" class="md-primary md-raised">
+            Submit Edit
+        </md-button>
+        <md-button ng-if="todo.edit" ng-click="closeDialog()" class="md-primary md-raised">
+            Cancel
+        </md-button>
+
+        <md-button ng-click="taskDone(todo._id)" class="md-primary md-raised md-fab" layout-padding hide-sm hide-md hide-lg ng-if="!todo.edit"
+            ng-hide="todo.complete">
+            <i class="material-icons">done_all</i>
+        </md-button>
+        <md-button ng-click="todo.edit=!todo.edit" class="md-primary md-raised md-fab" layout-padding hide-sm hide-md hide-lg ng-if="!todo.edit"
+            ng-hide="todo.complete">
+            <i class="material-icons">edit</i>
+        </md-button>
+        <md-button ng-click="deleteTask(todo._id)" class="md-primary md-raised md-fab" layout-padding hide-sm hide-md hide-lg ng-if="!todo.edit">
+            <i class="material-icons">delete_forever</i>
+        </md-button>
+        <md-button ng-click="closeDialog()" class="md-primary md-raised md-fab" layout-padding hide-sm hide-md hide-lg ng-if="!todo.edit">
+            <i class="material-icons">close</i>
+        </md-button>
+    </md-dialog-actions>
+</md-dialog>

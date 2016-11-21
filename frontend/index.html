@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="TodoApp">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title>Document</title>
+    <link rel="stylesheet" href="./node_modules/angular-material/angular-material.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="./styles/styles.css" rel="stylesheet">
+</head>
+
+<body ng-controller="MainController">
+
+    <md-content layout-fill>
+        <navbar></navbar>
+        <ng-view></ng-view>
+
+    </md-content>
+
+    <script src="./node_modules/angular/angular.js"></script>
+    <script src="./node_modules/angular-animate/angular-animate.js"></script>
+    <script src="./node_modules/angular-route/angular-route.js"></script>
+    <script src="./node_modules/angular-aria/angular-aria.js"></script>
+    <script src="./node_modules/angular-messages/angular-messages.js"></script>
+    <script src="./node_modules/angular-material/angular-material.js"></script>
+    <script src="./auth/auth.js"></script>
+    <script src="./app.js "></script>
+    <script src="./config/theme/theme.js"></script>
+    <script src="./config/routes/routes.js"></script>
+    <script src="./controllers/mainController.js"></script>
+    <script src="./controllers/noteController.js"></script>
+    <script src="./controllers/todoController.js"></script>
+    <script src="./controllers/profileController.js"></script>
+    <script src="./auth/signup/signup.js"></script>
+    <script src="./auth/login/login.js"></script>
+    <script src="./auth/logout/logout.js"></script>
+    <script src="./directives/navbar/navbar.js"></script>
+    <script src="./services/dialogService/dialogService.js"></script>
+    <script src="./services/httpService.js"></script>
+    <script src="./services/notificationService.js"></script>
+</body>
+
+</html>

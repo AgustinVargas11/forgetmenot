@@ -1,0 +1,39 @@
+<md-card flex="100" flex-gt-md="40" flex-offset-gt-md="30">
+    <md-card-title>
+        <md-card-title-text>
+            <span class="md-headline form-heading md-display-4">Log In</span>
+        </md-card-title-text>
+    </md-card-title>
+
+    <md-card-content>
+        <form name="signinForm" ng-submit="login(signinForm)">
+            <div layout="column">
+
+                <md-input-container>
+                    <label>username</label>
+                    <input type="text" name="username" ng-model="user.username" ng-minlength="5" ng-maxlength="15" required ng-messages-multiple>
+
+                    <div ng-messages="signinForm.username.$error" style="color:maroon" role="alert">
+                        <div ng-message="required">This field is required</div>
+                        <div ng-message="minlength">Your username is too short</div>
+                        <div ng-message="maxlength">Username must be less than 15 characters</div>
+                    </div>
+                    <div ng-messages="error" style="color:red" role="alert">
+                        <div style=" font-size: .75em;" layout-padding>{{error}}</div>
+                    </div>
+
+                </md-input-container>
+
+                <md-input-container>
+                    <label>password</label>
+                    <input type="password" name="password" ng-model="user.password" required>
+                    <div ng-messages="signinForm.password.$error" style="color:maroon" role="alert" ng-messages-multiple>
+                        <div ng-message="required">This field is required</div>
+                    </div>
+                </md-input-container>
+                <md-button class="md-raised md-accent" type="submit">Submit</md-button>
+            </div>
+
+        </form>
+    </md-card-content>
+</md-card>

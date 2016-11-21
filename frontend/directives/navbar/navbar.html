@@ -1,0 +1,24 @@
+<md-nav-bar nav-bar-aria-label="navigation links">
+    <md-nav-item ng-show="userService.isAuthenticated()" hide-xs hide-sm md-nav-href="#/todos" name="todos">Todo List</md-nav-item>
+    <md-nav-item ng-show="userService.isAuthenticated()" hide-xs hide-sm md-nav-href="#/profile" name="profile">My Profile</md-nav-item>
+    <md-nav-item ng-show="userService.isAuthenticated()" hide-xs hide-sm md-nav-href="#/notes" name="notes">Notes</md-nav-item>
+    <md-nav-item ng-hide="userService.isAuthenticated()" hide-xs hide-sm md-nav-href="#/login" name="singin">Log in</md-nav-item>
+    <md-nav-item ng-hide="userService.isAuthenticated()" hide-xs hide-sm md-nav-href="#/signup" name="singup">Sign up</md-nav-item>
+    <md-nav-item ng-show="userService.isAuthenticated()" hide-xs hide-sm md-nav-href="#/logout" name="logout">Log Out</md-nav-item>
+
+    <md-menu-bar hide-md hide-lg>
+        <md-menu>
+            <button ng-click="$mdOpenMenu()">
+     <i class="material-icons">menu</i>
+   </button>
+            <md-menu-content layout-padding>
+                <a ng-show="userService.isAuthenticated()" ng-click="$mdCloseMenu()" href="#/todos" type="text">Todo List</a>
+                <a ng-show="userService.isAuthenticated()" ng-click="$mdCloseMenu()" href="#/profile" type="text">My Profile</a>
+                <a ng-show="userService.isAuthenticated()" ng-click="$mdCloseMenu()" href="#/notes" type="text">Notes</a>
+                <a ng-hide="userService.isAuthenticated()" ng-click="$mdCloseMenu()" href="#/login" type="text">Log in</a>
+                <a ng-hide="userService.isAuthenticated()" ng-click="$mdCloseMenu()" href="#/signup" type="text">Sign up</a>
+                <a ng-show="userService.isAuthenticated()" ng-click="$mdCloseMenu()" href="#/logout" type="text">Log Out</a>
+            </md-menu-content>
+        </md-menu>
+    </md-menu-bar>
+</md-nav-bar>

@@ -1,0 +1,143 @@
+<div ng-cloak layout="row" layout-align="center center">
+
+    <md-content flex="100" flex-gt-md="40">
+        <md-tabs md-dynamic-height md-border-bottom md-no-ink-bar md-swipe-content>
+            <!-- TAB ONE -->
+            <md-tab label="Tasks">
+                <md-content class="md-padding">
+                    <md-content>
+                        <md-button ng-click="sideNavToggle()" class="md-raised md-accent">
+                            Add new task
+                        </md-button>
+                    </md-content>
+
+                    <md-list>
+                        <h3 class="empty" ng-if="!todos.length"> Add some tasks to your todo list!</h3>
+                        <md-list-item class="md-2-line" ng-repeat="item in todos" ng-click="showTodo(item)" ng-hide="item.complete">
+                            <div class="md-list-item-text">
+                                <div flex="100" flex-gt-md="55">
+                                    <h3>{{item.title}}</h3>
+                                    <p>{{item.description}}</p>
+                                    <p ng-show="item.deadline">deadline: {{item.deadline | date : "shortDate" }}</p>
+                                </div>
+                            </div>
+
+                            <div class="lock-size" layout="row" layout-align="center center" hide-xs>
+                                <md-fab-speed-dial ng-hide="hidden" md-direction="left" md-open="isOpen" class="md-scale md-fab-top-right" ng-class="{ 'md-hover-full': hover }"
+                                    ng-mouseenter="isOpen=true" ng-mouseleave="isOpen=false">
+                                    <md-fab-trigger>
+                                        <md-button aria-label="menu" class="md-fab md-primary">
+                                            <md-icon aria-label="menu"><i class="material-icons">menu</i></md-icon>
+                                        </md-button>
+                                    </md-fab-trigger>
+
+                                    <md-fab-actions>
+                                        <div ng-repeat="button in buttons">
+                                            <md-button aria-label="{{button.name}}" class="md-fab md-raised md-mini" ng-click="button.use(item._id, item)">
+                                                <md-icon aria-label="{{button.name}}"><i class="material-icons">{{button.icon}}</i></md-icon>
+                                            </md-button>
+                                        </div>
+                                    </md-fab-actions>
+                                </md-fab-speed-dial>
+                            </div>
+
+
+                            <md-divider></md-divider>
+                        </md-list-item>
+
+                    </md-list>
+                </md-content>
+            </md-tab>
+            <!-- TAB ONE END -->
+            <!-- TAB TWO -->
+            <md-tab label="Completed Tasks">
+                <md-content class="md-padding">
+
+                    <md-input-container>
+                        <label for="search">Search</label>
+                        <input type="text" ng-model="search.$" id="search">
+                    </md-input-container>
+                    <md-list-item class="md-2-line" ng-repeat="item in todos | filter: search : false" ng-click="showTodo(item)" ng-class="{complete: item.complete}"
+                        ng-show="item.complete">
+
+                        <div class="md-list-item-text">
+                            <div flex="100" flex-gt-md="55">
+                                <h3>{{item.title}}</h3>
+                                <p>{{item.description}}</p>
+                                <p ng-if="item.deadline">deadline: {{item.deadline | date : "shortDate" }}</p>
+                                <p>completed on: {{item.updatedAt | date: "shortDate"}}</p>
+                            </div>
+                        </div>
+
+                        <div class="lock-size" layout="row" layout-align="center center" hide-xs>
+                            <md-fab-speed-dial ng-hide="hidden" md-direction="left" md-open="isOpen" class="md-scale md-fab-top-right" ng-class="{ 'md-hover-full': hover }"
+                                ng-mouseenter="isOpen=true" ng-mouseleave="isOpen=false">
+                                <md-fab-trigger>
+                                    <md-button aria-label="menu" class="md-fab md-accent">
+                                        <md-icon aria-label="menu"><i class="material-icons">grade</i></md-icon>
+                                    </md-button>
+                                </md-fab-trigger>
+                            </md-fab-speed-dial>
+                        </div>
+
+                        <md-divider></md-divider>
+                    </md-list-item>
+                </md-content>
+            </md-tab>
+            <!-- TAB TWO END -->
+        </md-tabs>
+    </md-content>
+</div>
+<div>
+    <!-- SIDENAV -->
+    <md-sidenav class="md-sidenav-right md-whiteframe-4dp" md-component-id="right">
+
+        <md-toolbar>
+            <h1 class="md-toolbar-tools">Add New Task</h1>
+        </md-toolbar>
+        <md-content layout-padding>
+            <form name="newTodoForm" class="new-todo" ng-submit="submitNewTask()">
+                <md-input-container>
+                    <label for="title">task title</label>
+                    <input type="text" name="title" id="title" ng-model="newTodo.title" ng-minlength="3" ng-maxlength="20" md-autofocus autocomplete="off"
+                        required>
+                    <div ng-messages="newTodoForm.title.$error" style="color:maroon" role="alert" ng-messages-multiple>
+                        <div ng-message="required">A title is required</div>
+                        <div ng-message="minlength">Title is too short</div>
+                        <div ng-message="maxlength">Your title is too long</div>
+                    </div>
+                </md-input-container>
+                <br>
+                <md-input-container>
+                    <label for="description">task description</label>
+                    <textarea type="text" name="description" id="description" ng-model="newTodo.description" ng-minlength="6" autocomplete="off"
+                        required></textarea>
+                    <div ng-messages="newTodoForm.description.$error" style="color:maroon" role="alert" ng-messages-multiple>
+                        <div ng-message="required">A description is required</div>
+                        <div ng-message="minlength">Description is too short</div>
+                    </div>
+                </md-input-container>
+                <br>
+                <md-input-container>
+                    <label for="deadline">Deadline</label>
+                    <md-datepicker ng-model="newTodo.deadline" name="deadline" id="deadline" md-placeholder="Enter date" md-min-date="minDate"
+                        md-max-date="maxDate" md-open-on-focus></md-datepicker>
+                </md-input-container>
+                <md-switch ng-model="newTodo.reminders" aria-label="switch 1" ng-class="{on: newTodo.reminders}">
+                    Reminders
+                </md-switch>
+                <md-radio-group ng-model="newTodo.reminderFrequency" ng-show="newTodo.reminders">
+
+                    <md-radio-button value="1">Every day</md-radio-button>
+                    <md-radio-button value="2"> Every Other Day </md-radio-button>
+
+                </md-radio-group>
+                <br>
+                <br>
+                <md-button class="md-raised md-accent" type="submit">Submit</md-button>
+            </form>
+        </md-content>
+
+
+    </md-sidenav>
+</div>

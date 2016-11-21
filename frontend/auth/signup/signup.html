@@ -1,0 +1,85 @@
+<md-card flex="100" flex-gt-md="40" flex-offset-gt-md="30" class="signup">
+    <md-card-title>
+        <md-card-title-text>
+            <span class="md-headline form-heading md-display-4">Sign Up</span>
+        </md-card-title-text>
+    </md-card-title>
+
+    <md-card-content>
+        <form name="signupForm" ng-submit="signup()">
+            <div layout="column">
+
+                <md-input-container>
+                    <label>name</label>
+                    <input type="text" name="name" ng-model="newUser.name" ng-minlength="5" ng-maxlength="20" autocomplete="off" required>
+                    <div ng-messages="signupForm.name.$error" style="color:maroon" role="alert">
+                        <div ng-message="required">This field is required</div>
+                        <div ng-message="minlength">Your input is too short</div>
+                        <div ng-message="maxlength">Your input is too long</div>
+                    </div>
+                </md-input-container>
+
+                <md-input-container>
+                    <label>username</label>
+                    <input type="text" name="username" ng-model="newUser.username" ng-minlength="5" ng-maxlength="15" ng-blur="usernameAvailable = checkUsernameAvailability(signupForm)"
+                        autocomplete="off" required>
+                    <div ng-messages="signupForm.username.$error" style="color:maroon" role="alert">
+                        <div ng-message="required">This field is required</div>
+                        <div ng-message="minlength">Username must be at least 5 characters long</div>
+                        <div ng-message="maxlength">Username must be less than 15 characters</div>
+                    </div>
+                    <div ng-messages="usernameAvailable" style="color:red" role="alert" ng-show="signupForm.$error.duplicateUsername">
+                        <div ng-if="!usernameAvailable" style=" font-size: .75em;" layout-padding>This username is not available</div>
+                    </div>
+                </md-input-container>
+
+                <md-input-container>
+                    <label>email</label>
+                    <input type="email" name="email" ng-model="newUser.email" ng-minlength="5" required pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$"
+                        ng-blur="emailAvailable = checkEmailAvailability(signupForm)" autocomplete="off">
+                    <div ng-messages="signupForm.email.$error" style="color:maroon" role="alert">
+                        <div ng-message="required">This field is required</div>
+                        <div ng-message="minlength">Your input is too short</div>
+                        <div ng-message="pattern">Please enter a valid email address</div>
+                    </div>
+                    <div ng-messages="emailAvailable" style="color:red" role="alert" ng-show="signupForm.$error.duplicateEmail">
+                        <div ng-if="!emailAvailable" style=" font-size: .75em;" layout-padding>This email address is already tied to an account</div>
+                    </div>
+                </md-input-container>
+
+                <md-input-container>
+                    <label for="birthday">birthday</label>
+                    <md-datepicker ng-model="newUser.birthday" name="birthday" id="birthday" md-placeholder="Enter date" md-min-date="minDate"
+                        md-max-date="maxDate" required></md-datepicker>
+                    <div ng-messages="signupForm.birthday.$error" style="color:maroon" role="alert">
+                        <div ng-message="required">This is required</div>
+                    </div>
+                </md-input-container>
+
+                <md-input-container>
+                    <label>password</label>
+                    <input type="password" name="password" ng-model="newUser.password" ng-minlength="4" ng-maxlength="12" pattern="(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
+                        required>
+                    <div ng-messages="signupForm.password.$error" style="color:maroon" role="alert" ng-messages-multiple>
+                        <div ng-message="required">This field is required</div>
+                        <div ng-message="minlength">Your password is too short</div>
+                        <div ng-message="maxlength">Your password is too long</div>
+                        <div ng-message="pattern">Must have atleast one number and letter</div>
+                    </div>
+                </md-input-container>
+
+                <md-input-container>
+                    <label>confirm password</label>
+                    <input type="password" name="passwordCheck" ng-model="check.password" pattern="\b{{newUser.password}}\b" required>
+                    <div ng-messages="signupForm.passwordCheck.$error" style="color:maroon" role="alert" ng-messages-multiple>
+                        <div ng-message="required">This field is required</div>
+                        <div ng-message="pattern">Passwords must match</div>
+                    </div>
+                </md-input-container>
+
+                <md-button class="md-raised md-accent" type="submit" ng-disabled="signupForm.$invalid">Submit</md-button>
+            </div>
+
+        </form>
+    </md-card-content>
+</md-card>

@@ -1,0 +1,14 @@
+<div ng-cloak layout="row" layout-align="center center" layout-padding>
+    <md-content flex="100" flex-gt-sm="60">
+        <h3>Your Profile</h3>
+
+        <h2>{{user.displayUsername}}</h2>
+        <h4>Rank: {{user.rank}}</h4>
+        <p>Notes taken: {{user.notes}}</p>
+        <p>Tasks completed: {{user.completedTasks}}</p>
+        <p>Joined: {{user.createdAt | date: 'longDate'}}</p>
+        <p>Birthday: {{user.birthday | date: 'longDate'}}</p>
+        <p>Email address: {{user.email}}</p>
+
+    </md-content>
+</div>

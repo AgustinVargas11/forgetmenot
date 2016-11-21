@@ -1,0 +1,41 @@
+<div ng-cloak layout="row" layout-align="center center" layout-padding>
+    <md-content flex="100" flex-gt-sm="60">
+        <h1>Notes</h1>
+        <h3 class="empty" ng-hide="notes.length">Take some notes!</h3>
+        <md-tabs md-dynamic-height md-border-bottom md-swipe-content>
+            <md-tab label="+">
+                <md-content>
+                    <form name="newNoteForm" ng-submit="submitNewNote()">
+
+                        <input type="text" id="newNoteTitle" name="title" ng-model="newNote.title" class="new-note-title" ng-minlength="3" ng-maxlength="13"
+                            placeholder="enter note title" autocomplete="off" md-autofocus required>
+                        <div ng-messages="newNoteForm.title.$error" ng-show="newNoteForm.title.$dirty" style="color:firebrick;font-size: .75em;"
+                            role="alert" ng-messages-multiple>
+                            <div ng-message="required">A title is required</div>
+                            <div ng-message="minlength">Title is too short</div>
+                            <div ng-message="maxlength">Your title is too long</div>
+                        </div>
+
+                        <textarea type="text" id="newNoteBody" name="note" ng-model="newNote.note" class="new-note-body" ng-minlength="10" placeholder="enter notes here..."
+                            autocomplete="off" required></textarea>
+                        <div ng-messages="newNoteForm.note.$error" ng-show="newNoteForm.note.$dirty" style="color:firebrick;font-size: .75em;" role="alert"
+                            ng-messages-multiple>
+                            <div ng-message="required">This field is required</div>
+                            <div ng-message="minlength">Notes must be at least 10 characters long</div>
+                        </div>
+
+                        <md-button type="submit" class="md-raised md-primary"> Submit </md-button>
+
+                    </form>
+                </md-content>
+            </md-tab>
+
+            <md-tab label="{{note.title}}" ng-repeat="note in notes">
+                <md-content>
+                    <h1 class="md-display-1">{{note.title}}</h1>
+                    <p>{{note.note}}</p>
+                </md-content>
+            </md-tab>
+        </md-tabs>
+    </md-content>
+</div>
